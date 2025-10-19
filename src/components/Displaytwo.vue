@@ -60,11 +60,6 @@ const onFindPartnerClick = () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* 关键：确保文本列没有左右内边距，让内容紧贴左侧 */
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: 0;
-  margin-right: 0;
 }
 
 .section-title {

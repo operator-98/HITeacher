@@ -2,8 +2,8 @@
   <view class="home-page">
     <HeroSection />
     <!-- 删除了 <GenomicsCourseBanner /> -->
-    <MutationsSection />
-    <HeightSection />
+    <Displayone /> <!-- 修改：使用新的组件名 -->
+    <Displaytwo /> <!-- 修改：使用新的组件名 -->
     <KnowledgeSection />
     <FooterSection />
   </view>
@@ -12,8 +12,8 @@
 <script setup lang="ts">
 import HeroSection from '@/components/HeroSection.vue';
 // 删除了 import GenomicsCourseBanner from '@/components/GenomicsCourseBanner.vue';
-import MutationsSection from '@/components/MutationsSection.vue';
-import HeightSection from '@/components/HeightSection.vue';
+import Displayone from '@/components/Displayone.vue'; // 修改：导入新的组件名
+import Displaytwo from '@/components/Displaytwo.vue'; // 修改：导入新的组件名
 import KnowledgeSection from '@/components/KnowledgeSection.vue';
 import FooterSection from '@/components/FooterSection.vue';
 </script>

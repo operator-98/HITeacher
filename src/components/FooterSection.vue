@@ -15,7 +15,7 @@
       </view>
       <view class="link-column">
         <text class="column-title">Get In Touch</text>
-        <text class="link-item">Contact HITeacher</text>
+        <text class="link-item">Contact Harvard</text>
         <text class="link-item">Maps & Directions</text>
         <text class="link-item">Jobs</text>
       </view>
