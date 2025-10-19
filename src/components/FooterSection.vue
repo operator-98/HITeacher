@@ -38,8 +38,8 @@
 
 <style scoped>
 .footer-wrapper {
-  background-color: #1a1a1a;
-  color: #ccc;
+  background-color: #1a1a1a; /* 保持深色背景 */
+  color: #ccc; /* 保持文字颜色 */
   padding: 60px 20px; /* 调整了顶部内边距，因为删除了 logo 区域 */
   box-sizing: border-box;
 }
@@ -63,7 +63,7 @@
 .column-title {
   font-size: 18px; /* 增加字体大小 */
   font-weight: bold;
-  color: white;
+  color: white; /* 保持标题颜色 */
   margin-bottom: 15px;
 }
 
@@ -86,7 +86,7 @@
   max-width: 1000px;
   margin: 0 auto;
   padding-top: 20px;
-  border-top: 1px solid #444;
+  border-top: 1px solid #444; /* 保持边框颜色 */
 }
 
 .copyright {

@@ -11,10 +11,7 @@
       </view>
       <view class="nav-right">
         <!-- 删除了 <view class="nav-item"> <text class="icon">🔍</text> <text>Search</text> </view> -->
-        <!-- 添加“立刻开始”按钮，应用之前的按钮样式 -->
-        <button class="custom-button custom-button-primary mobile-hidden" @click="onGetStartedClick">
-          立刻开始
-        </button>
+        <!-- 删除了右上角的“立刻开始”按钮 -->
       </view>
     </view>
 
@@ -23,6 +20,10 @@
       <text class="hero-subtitle">
         立刻开始：查找课程学习资料，寻求同学学业支持，加入学习氛围小组...
       </text>
+      <!-- 主内容区域按钮，已居中 -->
+      <button class="custom-button custom-button-primary" @click="onMainContentButtonClick">
+        立刻开始
+      </button>
     </view>
   </view>
 </template>
@@ -31,8 +32,8 @@
 // 移除了 backgroundImage 的引入
 
 // 该组件目前不需要脚本逻辑
-const onGetStartedClick = () => {
-  console.log('立刻开始按钮被点击了！');
+const onMainContentButtonClick = () => {
+  console.log('主内容区立刻开始按钮被点击了！');
   // 在这里添加你的点击逻辑
 };
 </script>
@@ -48,7 +49,7 @@ const onGetStartedClick = () => {
   align-items: center;
   text-align: center;
   color: black; /* 改为黑色以适应白色背景 */
-  background-color: white; /* 设置为白色背景 */
+  background-color: #F5F5F4; /* 设置为新的主色 (奶白) */
   /* 删除了 background-image 相关属性 */
 }
 
@@ -94,11 +95,11 @@ const onGetStartedClick = () => {
 }
 
 .logo-hi {
-  color: #ff4d4d; /* 红色 */
+  color: #B91C1C; /* 修改：深红 */
 }
 
 .logo-teacher {
-  color: #4d79ff; /* 蓝色 */
+  color: #1E3A8A; /* 修改：靛蓝 */
 }
 
 .nav-right {
@@ -122,7 +123,9 @@ const onGetStartedClick = () => {
   text-align: center; /* 居中按钮文字 */
   border: 2px solid transparent; /* 为悬停效果预留边框空间 */
   /* 注意：这里没有 align-self，因为它在 nav-right (flex row) 里 */
-  margin-left: 0; /* 关键：强制左边距为 0 */
+  margin-top: 20px; /* 关键：为新按钮添加上边距 */
+  margin-bottom: 20px; /* 关键：为新按钮添加下边距 */
+  /* margin-left: 0; 删除：因为现在需要居中 */
 }
 
 /* 新增：按钮焦点样式 */
@@ -132,27 +135,27 @@ const onGetStartedClick = () => {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000; /* 示例 focus ring，颜色可调整 */
 }
 
-/* 新增：primary 按钮样式 */
+/* 新增：primary 按钮样式 (用于主内容区按钮) */
 .custom-button-primary {
-  background-color: #1f2937; /* bg-gray-800 */
+  background-color: #1E3A8A; /* 修改：使用靛蓝色 */
   color: #fff; /* text-white */
 }
 
-/* 新增：primary 按钮悬停样式 */
+/* 新增：primary 按钮悬停样式 (用于主内容区按钮) */
 .custom-button-primary:hover {
   background-color: transparent; /* hover:bg-transparent */
-  color: #1f2937; /* hover:text-gray-800 */
-  border-color: #1f2937; /* hover:border-2 border-gray-800 */
+  color: #1E3A8A; /* hover:text-indigo-600 */
+  border-color: #1E3A8A; /* hover:border-2 border-indigo-600 */
 }
 
-/* 新增：移动端隐藏按钮 */
-.mobile-hidden {
-  display: block; /* 默认显示 */
-}
+/* 删除：移动端隐藏按钮相关样式，因为按钮已移除 */
 
 /* 英雄内容样式 */
 .hero-content {
   max-width: 700px;
+  display: flex; /* 关键：使用 flex 布局排列内容 */
+  flex-direction: column; /* 关键：垂直排列 */
+  align-items: center; /* 关键：内容居中 */
 }
 
 .hero-title {
@@ -168,6 +171,7 @@ const onGetStartedClick = () => {
   font-size: 18px;
   line-height: 1.7;
   font-family: inherit;
+  margin-bottom: 20px; /* 关键：为副标题和按钮之间添加间距 */
 }
 
 /* 移动端适配 */
@@ -201,9 +205,13 @@ const onGetStartedClick = () => {
   .hero-subtitle {
     font-size: 16px;
   }
-  /* 隐藏移动端的“立刻开始”按钮 */
-  .mobile-hidden {
-    display: none;
+  /* 调整移动端按钮间距 */
+  .custom-button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .hero-subtitle {
+    margin-bottom: 15px; /* 调整移动端间距 */
   }
 }
 </style>

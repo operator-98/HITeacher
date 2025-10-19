@@ -32,7 +32,7 @@ const onFindPartnerClick = () => {
   padding: 60px 20px;
   gap: 40px;
   align-items: center;
-  background-color: #f9f9f9; /* 浅灰色背景 */
+  background-color: #F5F5F4; /* 修改：更新背景色 */
   box-sizing: border-box;
 }
 
@@ -66,11 +66,13 @@ const onFindPartnerClick = () => {
   font-size: 42px;
   font-weight: 300;
   line-height: 1.2;
+  color: #1f2937; /* 可选：根据设计调整标题颜色 */
 }
 
 .section-text {
   font-size: 16px;
   line-height: 1.7;
+  color: #374151; /* 可选：根据设计调整文本颜色 */
 }
 
 /* 修改：按钮基础样式 - 调整高度、最大圆角、左对齐且宽度自适应 */
@@ -99,17 +101,17 @@ const onFindPartnerClick = () => {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000; /* 示例 focus ring，颜色可调整 */
 }
 
-/* 新增：primary 按钮样式 */
+/* 修改：primary 按钮样式 (使用靛蓝色) */
 .custom-button-primary {
-  background-color: #1f2937; /* bg-gray-800 (Tailwind gray-800) */
+  background-color: #1E3A8A; /* 修改：使用靛蓝色 */
   color: #fff; /* text-white */
 }
 
-/* 新增：primary 按钮悬停样式 */
+/* 修改：primary 按钮悬停样式 (使用靛蓝色) */
 .custom-button-primary:hover {
   background-color: transparent; /* hover:bg-transparent */
-  color: #1f2937; /* hover:text-gray-800 */
-  border-color: #1f2937; /* hover:border-2 border-gray-800 */
+  color: #1E3A8A; /* hover:text-indigo-600 */
+  border-color: #1E3A8A; /* hover:border-2 border-indigo-600 */
 }
 
 /* 移动端适配: 文本在图片上方 */
