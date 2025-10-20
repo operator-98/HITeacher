@@ -22,7 +22,7 @@ import FooterSection from '@/components/FooterSection.vue';
 page {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
-  background-color: #ffffff;
+  background-color: #F5F5F4;
   color: #333;
   margin: 0;
   padding: 0;
