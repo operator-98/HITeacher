@@ -3,21 +3,27 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "HITeacher" 
+				"navigationBarTitleText": "HITeacher"
 			}
 		},
 		{
 			"path": "pages/artlist/index",
 			"style": {
-				"navigationBarTitleText": "Artlist Home"
+				"navigationBarTitleText": "我的主页"
+			}
+		},
+		{
+			"path": "pages/resource/index", 
+			"style": {
+				"navigationBarTitleText": "学习资源" 
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationStyle": "custom", 
+		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F5F5F4" 
+		"backgroundColor": "#F5F5F4"
 	}
 }
