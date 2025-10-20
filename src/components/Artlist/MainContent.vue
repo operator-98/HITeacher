@@ -64,8 +64,26 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* 修改：桌面端保持自动适应，移动端改为两列 */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 桌面端规则 */
   gap: 20px;
+}
+
+/* 移动端适配：改为两列 */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr); /* 移动端：显示两列 */
+    /* gap: 15px; */ /* 可以根据需要调整移动端间距 */
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  /* 删除了 .subscribe-btn-mobile 的移动端显示规则 */
+  /* .card-grid {
+    grid-template-columns: 1fr; 移动端单列，已移除
+  } */
 }
 
 .content-card {
@@ -121,16 +139,15 @@
   /* 可以添加特定样式 */
 }
 
-/* 移动端适配 */
-@media (max-width: 768px) {
+/* 移动端适配 (已整合到上面的 @media 规则中) */
+/* @media (max-width: 768px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
-  /* 删除了 .subscribe-btn-mobile 的移动端显示规则 */
   .card-grid {
-    grid-template-columns: 1fr; /* 移动端单列 */
+    grid-template-columns: 1fr; /!* 移动端单列 *!/
   }
-}
+} */
 </style>
