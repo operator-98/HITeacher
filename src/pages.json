@@ -1,13 +1,20 @@
 {
-	"pages": [ 
+	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "HITeacher" 
+			}
+		},
+		{
+			"path": "pages/artlist/index",
+			"style": {
+				"navigationBarTitleText": "Artlist Home"
 			}
 		}
 	],
 	"globalStyle": {
+		"navigationStyle": "custom", 
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
