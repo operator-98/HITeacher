@@ -1,8 +1,12 @@
 <template>
   <view class="resource-page">
-    <SideBar class="sidebar-component" />
+    <!-- 侧边栏 - 使用 fixed 定位 -->
+    <view class="sidebar-fixed-container">
+      <SideBar class="sidebar-component" />
+    </view>
 
-    <view class="main-area">
+    <!-- 主内容区 - 包含 header 和 server-section，负责滚动 -->
+    <view class="main-content">
       <MainContent class="content-component" />
     </view>
   </view>
@@ -14,57 +18,65 @@ import MainContent from '@/components/Resource/MainContent.vue'; // <-- 使用�
 </script>
 
 <style scoped>
-/* 与 'src/pages/artlist/index.vue' 相同的布局样式 */
 .resource-page {
   display: flex;
   width: 100%;
   min-height: 100vh;
   background-color: #F5F5F4; /* 使用项目主色调 */
-  color: #333; /* 使用项目默认文字色 */
+  color: #333;              /* 使用项目默认文字色 */
+}
+
+/* 新增：侧边栏固定定位容器 */
+.sidebar-fixed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; /* 占满视口高度 */
+  width: 240px; /* 与原 SideBar 宽度一致 */
+  z-index: 100; /* 确保在主内容之上 */
+  pointer-events: none; /* 确保不影响主内容区的点击 */
 }
 
 .sidebar-component {
-  flex-shrink: 0;
-  width: 240px; /* 侧边栏固定宽度 */
-  height: 100vh; /* 保证侧边栏高度 */
   background-color: #E5E7EB; /* 与 SideBar.vue 样式一致 */
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   color: #6B7280; /* 与 SideBar.vue 样式一致 */
+  height: 100%; /* 占满容器高度 */
+  width: 100%; /* 占满容器宽度 */
+  pointer-events: auto; /* 恢复侧边栏自身的点击事件 */
 }
 
-.main-area {
+/* 修改：主内容区容器 */
+.main-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 240px); /* 占据剩余宽度 */
-  /* 添加 padding，与 MainContent 的样式配合 */
-  padding: 24px;
+  /* width: calc(100% - 240px); /1* 移除，因为 SideBar 是 fixed *1/ */
+  padding: 20px; /* 为内容添加内边距 */
+  padding-left: 260px; /* 关键：为固定的 SideBar (240px) 留出空间，并加上一点间距 (20px) */
+  margin-left: 0; /* 确保 margin 不会覆盖 fixed 元素 */
   box-sizing: border-box;
+  min-height: 100vh; /* 确保至少占满视口高度 */
+  overflow-y: auto; /* 关键：使此容器内部内容可滚动 */
 }
 
 .content-component {
-  flex-grow: 1; /* 占据剩余高度并允许滚动 */
-  overflow-y: auto;
+  flex-grow: 1; /* 占据剩余高度 */
+  display: flex; /* 使用 flex 布局 */
+  flex-direction: column; /* 垂直排列 header 和 server-section */
+  /* overflow-y: auto; /1* 移除：滚动由父容器 .main-content 处理 *1/ */
 }
 
-/* 移动端适配 */
+/* 移动端适配：隐藏固定侧边栏，主区域占满 */
 @media (max-width: 768px) {
-  .resource-page {
-    flex-direction: column;
+  .sidebar-fixed-container {
+    display: none; /* 隐藏固定定位的侧边栏容器 */
   }
-  .sidebar-component {
-    width: 100%;
-    height: auto; /* 移动端不再是全高 */
-    display: none; /* 可选：移动端隐藏侧边栏，通过汉堡菜单控制 */
-  }
-  .main-area {
-    width: 100%;
-  }
-  .content-component {
-    width: 100%;
+  .main-content {
+    padding-left: 20px; /* 移动端移除为侧边栏预留的左边距 */
   }
 }
 </style>
