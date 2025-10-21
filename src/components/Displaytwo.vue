@@ -25,16 +25,18 @@ const onFindPartnerClick = () => {
 
 <style scoped>
 /* 大部分样式与 MutationsSection 类似 */
-.section-wrapper {
+.section-wrapper { /* <--- 请确保这里有 background-color: #F5F5F4; */
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
   gap: 40px;
   align-items: center;
-  background-color: #F5F5F4; /* 修改：更新背景色 */
+  background-color: #F5F5F4; /* <--- 确保这一行存在且值正确 */
   box-sizing: border-box;
 }
+
+/* ... 其余样式保持不变 ... */
 
 .column {
   flex: 1;

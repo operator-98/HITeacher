@@ -27,7 +27,7 @@ const onExploreResourcesClick = () => {
 </script>
 
 <style scoped>
-.section-wrapper {
+.section-wrapper { /* <--- 请确保这里有 background-color: #F5F5F4; */
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
@@ -35,8 +35,10 @@ const onExploreResourcesClick = () => {
   gap: 40px;
   align-items: center;
   box-sizing: border-box;
-  background-color: #F5F5F4; /* 修改：更新背景色 */
+  background-color: #F5F5F4; /* <--- 确保这一行存在且值正确 */
 }
+
+/* ... 其余样式保持不变 ... */
 
 .column {
   flex: 1;

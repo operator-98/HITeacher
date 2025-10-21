@@ -21,7 +21,7 @@
         立刻开始：查找课程学习资料，寻求同学学业支持，加入学习氛围小组...
       </text>
       <!-- 主内容区域按钮，已居中 -->
-      <button class="custom-button custom-button-primary" @click="onMainContentButtonClick">
+      <button class="custom-button custom-button-secondary" @click="onMainContentButtonClick">
         立刻开始
       </button>
     </view>
@@ -33,12 +33,27 @@
 
 // 该组件目前不需要脚本逻辑
 const onMainContentButtonClick = () => {
-  console.log('主内容区立刻开始按钮被点击了！');
-  // 在这里添加你的点击逻辑
+  // console.log('主内容区立刻开始按钮被点击了！');
+  // 在这里添加你的点击逻辑 - 页面跳转
+  uni.navigateTo({
+    url: '/pages/artlist/index', // 目标页面路径
+    success: (res) => {
+      console.log('跳转到 artlist 页面成功', res);
+    },
+    fail: (err) => {
+      console.error('跳转到 artlist 页面失败', err);
+      // 可以在这里添加用户提示，例如使用 uni.showToast
+      uni.showToast({
+        title: '页面跳转失败',
+        icon: 'none'
+      });
+    }
+  });
 };
 </script>
 
 <style scoped>
+/* ... 保持原有的样式不变 ... */
 .hero-wrapper {
   position: relative;
   min-height: 90vh;
@@ -135,14 +150,14 @@ const onMainContentButtonClick = () => {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000; /* 示例 focus ring，颜色可调整 */
 }
 
-/* 新增：primary 按钮样式 (用于主内容区按钮) */
-.custom-button-primary {
+/* 新增：secondary 按钮样式 (用于主内容区按钮) */
+.custom-button-secondary {
   background-color: #1E3A8A; /* 修改：使用靛蓝色 */
   color: #fff; /* text-white */
 }
 
-/* 新增：primary 按钮悬停样式 (用于主内容区按钮) */
-.custom-button-primary:hover {
+/* 新增：secondary 按钮悬停样式 (用于主内容区按钮) */
+.custom-button-secondary:hover {
   background-color: transparent; /* hover:bg-transparent */
   color: #1E3A8A; /* hover:text-indigo-600 */
   border-color: #1E3A8A; /* hover:border-2 border-indigo-600 */
