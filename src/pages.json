@@ -9,13 +9,19 @@
 		{
 			"path": "pages/artlist/index",
 			"style": {
-				"navigationBarTitleText": "我的主页"
+				"navigationBarTitleText": "Artlist Home"
 			}
 		},
 		{
-			"path": "pages/resource/index", 
+			"path": "pages/resource/index",
 			"style": {
-				"navigationBarTitleText": "学习资源" 
+				"navigationBarTitleText": "学习资源"
+			}
+		},
+		{
+			"path": "pages/profile/index", 
+			"style": {
+				"navigationBarTitleText": "我的资料" 
 			}
 		}
 	],

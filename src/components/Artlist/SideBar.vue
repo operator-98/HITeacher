@@ -1,218 +1,220 @@
 <template>
   <view class="sidebar">
-    <!-- Logo 永远显示 -->
+    <!-- Logo -->
     <view class="logo">
       <text class="logo-hi">HI</text>
       <text class="logo-teacher">Teacher</text>
     </view>
 
-    <!-- 导航列表，在移动端隐藏 -->
+    <!-- 导航列表 -->
     <view class="nav-list">
-      <!-- 修改：为主页按钮也添加点击事件，并根据当前页面路径动态添加 active 类 -->
-      <!-- 使用 isCurrentPage 方法来判断是否为当前页面 -->
-      <view class="nav-item" :class="{ active: isCurrentPage('artlist') }" @click="navigateToArtlist">
+      <view
+        class="nav-item"
+        :class="{ active: currentPage === 'artlist' }"
+        @click="navigateToArtlist"
+      >
         <text>主页</text>
       </view>
-      <view class="nav-item" :class="{ active: isCurrentPage('resource') }" @click="navigateToResource">
+
+      <view
+        class="nav-item"
+        :class="{ active: currentPage === 'resource' }"
+        @click="navigateToResource"
+      >
         <text>学习资源</text>
       </view>
-      <view class="nav-item" :class="{ active: isCurrentPage('partners') }" @click="navigateToPartners">
-        <text>优秀伙伴</text>
-      </view>
-      <view class="nav-item" :class="{ active: isCurrentPage('groups') }" @click="navigateToGroups">
-        <text>学习小组</text>
+
+      <view
+        class="nav-item"
+        :class="{ active: currentPage === 'profile' }"
+        @click="navigateToProfile"
+      >
+        <text>个人资料</text>
       </view>
     </view>
-
-    <!-- 删除了原来的用户列表 (user-list) -->
   </view>
 </template>
 
 <script setup lang="ts">
-// 定义跳转函数
-const navigateToArtlist = () => {
-  uni.navigateTo({
-    url: '/pages/artlist/index', // 跳转到 artlist 页面
-    success: (res) => {
-      console.log('跳转到主页 (artlist) 成功', res);
-    },
-    fail: (err) => {
-      console.error('跳转到主页 (artlist) 失败', err);
-      uni.showToast({
-        title: `页面跳转失败: ${err.errMsg || '未知错误'}`,
-        icon: 'none',
-        duration: 2000
-      });
-    }
-  });
-};
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const navigateToResource = () => {
-  uni.navigateTo({
-    url: '/pages/resource/index',
-    success: (res) => {
-      console.log('跳转到学习资源页面成功', res);
-    },
-    fail: (err) => {
-      console.error('跳转到学习资源页面失败', err);
-      uni.showToast({
-        title: `页面跳转失败: ${err.errMsg || '未知错误'}`,
-        icon: 'none',
-        duration: 2000
-      });
-    }
-  });
-};
+// 当前激活页面 key：'artlist' | 'resource' | 'profile'
+const currentPage = ref('artlist')
 
-// 假设的其他页面跳转函数
-const navigateToPartners = () => {
-  uni.navigateTo({
-    url: '/pages/partners/index', // 请根据实际路径修改
-    success: (res) => {
-      console.log('跳转到优秀伙伴页面成功', res);
-    },
-    fail: (err) => {
-      console.error('跳转到优秀伙伴页面失败', err);
-      uni.showToast({
-        title: `页面跳转失败: ${err.errMsg || '未知错误'}`,
-        icon: 'none',
-        duration: 2000
-      });
-    }
-  });
-};
+// 更新本地状态（供内部/外部调用）
+const updateCurrentPage = (pagePath: string) => {
+  currentPage.value = pagePath
+  // 方便调试
+  // console.log('[Sidebar] updateCurrentPage ->', pagePath)
+}
 
-const navigateToGroups = () => {
-  uni.navigateTo({
-    url: '/pages/groups/index', // 请根据实际路径修改
-    success: (res) => {
-      console.log('跳转到学习小组页面成功', res);
-    },
-    fail: (err) => {
-      console.error('跳转到学习小组页面失败', err);
-      uni.showToast({
-        title: `页面跳转失败: ${err.errMsg || '未知错误'}`,
-        icon: 'none',
-        duration: 2000
-      });
-    }
-  });
-};
-
-// 定义一个方法，用于判断当前页面是否是传入的页面标识符
-const isCurrentPage = (pageIdentifier: string) => {
-  const pages = getCurrentPages(); // 获取页面栈
-  if (pages.length > 0) {
-    const currentPage = pages[pages.length - 1]; // 获取当前页面实例
-    const currentRoute = currentPage.route; // 获取当前页面路径
-    console.log('SideBar 检测到当前页面路径:', currentRoute);
-
-    // 根据页面路径判断对应的标识符
-    // 请确保这里的路径判断逻辑与你的实际文件路径和 pages.json 配置一致
-    // 例如，如果页面路径是 'pages/artlist/index'，则标识符是 'artlist'
-    if (currentRoute) {
-      if (currentRoute.includes('artlist')) {
-        return pageIdentifier === 'artlist';
-      } else if (currentRoute.includes('resource')) {
-        return pageIdentifier === 'resource';
-      } else if (currentRoute.includes('partners')) {
-        return pageIdentifier === 'partners';
-      } else if (currentRoute.includes('groups')) {
-        return pageIdentifier === 'groups';
+/**
+ * 帮助函数：尝试从当前路由堆栈里推断当前页面标识
+ * 兼容 uni-app 常见 getCurrentPages() 返回结构
+ */
+const detectCurrentPageFromRoute = () => {
+  try {
+    // @ts-ignore getCurrentPages 是运行时 API
+    const pages = getCurrentPages && getCurrentPages()
+    if (pages && pages.length) {
+      const last = pages[pages.length - 1]
+      // last.route 在 uni-app 中通常是 pages/xxx/xxx
+      const route = last.route || last.__route || last.$route?.path || ''
+      if (route) {
+        if (route.includes('/pages/profile')) return 'profile'
+        if (route.includes('/pages/resource')) return 'resource'
+        if (route.includes('/pages/artlist')) return 'artlist'
       }
     }
+  } catch (e) {
+    // ignore
   }
-  // 如果无法获取路径或路径不匹配，则默认返回 false
-  // 或者根据你的默认页面逻辑返回 true，例如：
-  // return pageIdentifier === 'artlist'; // 如果 artlist 是默认主页
-  return false;
-};
+  return null
+}
 
-// 可选：如果你想在 SideBar 组件显示时也更新状态（例如在页面通过浏览器后退按钮返回时）
-// 但这通常不如每次渲染时调用 isCurrentPage 来得直接
-// import { onMounted, onUpdated } from 'vue';
-// onMounted(() => {
-//   // 组件挂载时检查一次
-//   // isCurrentPage('...'); // 不直接调用，而是通过模板中的 :class
-// });
-// onUpdated(() => {
-//   // 组件更新时检查一次（这可能不够精确，依赖模板响应式更新）
-//   // isCurrentPage('...'); // 不直接调用，而是通过模板中的 :class
-// });
+// ========== 导航函数：在跳转前后同步状态 ==========
+const navigateToArtlist = () => {
+  updateCurrentPage('artlist')
+  uni.navigateTo({
+    url: '/pages/artlist/index',
+    success: () => {
+      // 主动通知（防止某些页面没有在 onShow 里 emit）
+      uni.$emit('updateSidebarPage', 'artlist')
+    },
+    fail: (err) => {
+      console.error('navigateToArtlist fail', err)
+      uni.showToast({ title: '页面跳转失败', icon: 'none' })
+    }
+  })
+}
 
+const navigateToResource = () => {
+  updateCurrentPage('resource')
+  uni.navigateTo({
+    url: '/pages/resource/index',
+    success: () => uni.$emit('updateSidebarPage', 'resource'),
+    fail: (err) => {
+      console.error('navigateToResource fail', err)
+      uni.showToast({ title: '页面跳转失败', icon: 'none' })
+    }
+  })
+}
+
+const navigateToProfile = () => {
+  updateCurrentPage('profile')
+  uni.navigateTo({
+    url: '/pages/profile/index',
+    success: () => uni.$emit('updateSidebarPage', 'profile'),
+    fail: (err) => {
+      console.error('navigateToProfile fail', err)
+      uni.showToast({ title: '页面跳转失败', icon: 'none' })
+    }
+  })
+}
+
+// ========== 生命周期：初始化时尝试从路由推断当前页面，并订阅全局事件 ==========
+onMounted(() => {
+  // 1) 尝试从路由堆栈推断
+  const detected = detectCurrentPageFromRoute()
+  if (detected) updateCurrentPage(detected)
+
+  // 2) 订阅事件：页面可以 emit 'updateSidebarPage' 来同步侧边栏
+  uni.$on('updateSidebarPage', (pagePath: string) => {
+    if (pagePath) updateCurrentPage(pagePath)
+  })
+})
+
+onUnmounted(() => {
+  uni.$off('updateSidebarPage')
+})
 </script>
 
 <style scoped>
-/* ... 保持原有的样式不变 ... */
 .sidebar {
   width: 100%;
-  /* height: 100vh; /1* 移动端时可能不需要占满视口高度 *1/ */
-  background-color: #E5E7EB; /* 使用浅灰色背景 (与 MainContent 保持一致) */
-  padding: 20px;
+  background-color: #f3f4f6;
+  padding: 24px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  color: #6B7280; /* 使用中灰色文字 */
+  gap: 24px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 28px;
-  font-weight: bold;
-  color: #1E3A8A; /* 使用靛蓝色整体，子元素再分别设置 */
-  margin-bottom: 30px; /* 桌面端时的下边距 */
+  font-weight: 700;
   padding-left: 10px;
-  display: flex; /* 使 HI 和 Teacher 并排 */
-  align-items: center; /* 垂直居中对齐 */
 }
 
 .logo-hi {
-  color: #B91C1C; /* 使用深红色 */
+  color: #b91c1c;
 }
 
 .logo-teacher {
-  color: #1E3A8A; /* 使用靛蓝色 */
+  color: #1e3a8a;
 }
 
 .nav-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* 删除了 .user-list 样式 */
-
+/* 导航项：最大圆角、平滑过渡 */
 .nav-item {
   display: flex;
   align-items: center;
-  /* gap: 12px; /1* 修改：移除图标后的间距 *1/ */
-  padding: 10px 10px;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  font-size: 16px;
   font-weight: 500;
-  cursor: pointer; /* 添加光标样式 */
-  transition: all 0.2s;
+  cursor: pointer;
+  color: #374151;
+  background-color: transparent;
+  transition: all 0.2s ease;
 }
 
+/* 悬停与激活样式 */
 .nav-item:hover {
-  background-color: #D1D5DB; /* 使用浅灰色悬停背景 */
-  color: #1f2937; /* 使用深灰色悬停文字 */
+  background-color: #dbeafe;
+  color: #1e3a8a;
 }
 
+/* 激活：深色背景 + 白字 */
 .nav-item.active {
-  background-color: #D1D5DB; /* 使用浅灰色激活背景 */
-  color: #1f2937; /* 使用深灰色激活文字 */
+  background-color: #1e3a8a;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.3);
 }
 
-/* 删除了 .icon 样式 */
-
-/* 移动端适配：隐藏导航列表，调整 Logo 间距 */
+/* 响应式：窄屏时横向展示 */
 @media (max-width: 768px) {
-  .nav-list {
-    display: none; /* 隐藏导航按钮列表 */
+  .sidebar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 0;
   }
+
   .logo {
-    margin-bottom: 10px; /* 调整移动端 Logo 下边距，因为没有导航项了 */
-    padding-left: 0; /* 调整移动端 Logo 左侧内边距 */
+    font-size: 22px;
+    padding-left: 0;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+    padding: 8px 14px;
   }
 }
 </style>
